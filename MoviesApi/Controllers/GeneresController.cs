@@ -31,5 +31,15 @@ namespace MoviesApi.Controllers
             _Context.SaveChanges();
             return  Ok(genere); 
         }
+        [HttpPut (template:"{id}")]
+        public async Task<IActionResult> UpdateAsync(int id,[FromBody]CreateGenreDTO dto)
+        {
+            var genere=await _Context.Geners.SingleOrDefaultAsync(g=>g.Id==id);
+            if(genere==null)
+                return NotFound();
+            genere.Name=dto.Name;
+            _Context.SaveChanges();
+            return Ok(genere);
+        }
     }
 }
