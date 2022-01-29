@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MoviesApi.Models;
+using MoviesApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionstring = builder.Configuration.GetConnectionString(name:"Defaultconnection");
@@ -10,6 +11,12 @@ options.UseSqlServer(connectionstring));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//use interface
+builder.Services.AddTransient<IMoviesService,MoviesService>();
+builder.Services.AddTransient<IGenresService, GenresService>();
+
+
 builder.Services.AddCors();
 builder.Services.AddSwaggerGen(options=>
 {
